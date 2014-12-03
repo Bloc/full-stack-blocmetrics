@@ -1,0 +1,34 @@
+.page-header
+  %h1= @domain.name.titleize
+
+- if !@domain.verified?
+  .alert.alert-danger
+    You need to verify this domain before you can send any events.
+  .lead
+    In order to verify your domain, please add the following code in your application
+    %code= "<head>"
+    section:
+    %pre= "<meta name='blocmetrics_verification' content='#{@domain.verification_code}'>"
+    and click the following link.
+    .text-left
+    = link_to "Ok, it's there", dashboard_domain_verifications_url(@domain), method: :post, class: "btn btn-success btn-lg"
+- else
+  .lead
+    %p
+      %strong Setting up the Agent
+      %br/
+      add the following to your application html:
+      %pre= "<script src='#{ActionMailer::Base.default_url_options[:host]}/blocmetrics.js' type='text/javascript'>"
+    %p
+      %strong Sending Events
+      %br/
+      In order to submit events use the following snippet inside a
+      %code= "<script>"
+      tag:
+      %pre
+        :escaped
+          Blocmetrics.setAuthToken("#{current_user.authentication_token}"); # This is a private key, don't share this!
+      and submit events using this one:
+      %pre
+        :escaped
+          Blocmetrics.send("event_name", {attribute_1: "hi", attribute_2, ...});
