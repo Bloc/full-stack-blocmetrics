@@ -4,10 +4,11 @@ class Api::V1::BaseController < ApplicationController
 
   skip_before_filter :verify_authenticity_token
 
-  before_filter :authenticate_from_user_token!
-
   before_filter :cors_preflight_check
   after_filter :set_headers
+
+  before_filter :authenticate_from_user_token!
+  before_filter :authenticate_user!
 
   def authenticate_from_user_token!
 
@@ -39,6 +40,7 @@ class Api::V1::BaseController < ApplicationController
     headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
     headers['Access-Control-Allow-Headers'] = 'Access-Control-Allow-Origin, X-Requested-With, X-Prototype-Version, Content-Type'
     headers['Access-Control-Max-Age'] = '1728000'
+    render text: "" if request.method == "OPTIONS"
   end
 
 end

@@ -1,3 +1,4 @@
+require 'uri'
 class User
   include Mongoid::Document
   # Include default devise modules. Others available are:
@@ -26,8 +27,18 @@ class User
   field :authentication_token, type: String
 
   has_many :domains
-  
+
   before_create :generate_authentication_token
+
+  def domain_from_caller(referer)
+    uri = URI.parse(referer)
+    request_origin = "#{uri.scheme}://#{uri.host}"
+
+    if uri.port != 80
+      request_origin += ":#{uri.port}"
+    end
+    self.domains.where(url: request_origin).first
+  end
 
   protected
 

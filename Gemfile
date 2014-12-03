@@ -34,6 +34,7 @@ gem 'devise'
 gem 'httparty'
 gem 'kaminari'
 gem 'nokogiri'
+gem 'google_visualr'
 
 group :development do
   gem 'thin'

@@ -1,3 +1,4 @@
+
 class Api::V1::EventsController < Api::V1::BaseController
 
   def index
@@ -5,7 +6,22 @@ class Api::V1::EventsController < Api::V1::BaseController
   end
 
   def create
-    render json: {status: "ok"}, status: :created
+
+    domain = current_user.domain_from_caller(request.referer)
+
+    if domain.blank?
+      render json: {status: "error"}, status: :forbidden
+    else
+      event = domain.events.build(name: params[:name], data: params[:data])
+      event.save
+      render json: {status: "ok"}, status: :created
+    end
+
   end
 
+  protected
+
+  def event_params
+
+  end
 end

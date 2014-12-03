@@ -13,7 +13,9 @@
     .text-left
     = link_to "Ok, it's there", dashboard_domain_verifications_url(@domain), method: :post, class: "btn btn-success btn-lg"
 - else
-  .lead
+  .text-right
+    = link_to "Toggle Documentation", "#", class: "btn btn-primary btn-sm", id: "toggleDocumentation"
+  .lead{class: @events.empty? ? "show" : "hide", id: "docs"}
     %p
       %strong Setting up the Agent
       %br/
@@ -32,3 +34,13 @@
       %pre
         :escaped
           Blocmetrics.send("event_name", {attribute_1: "hi", attribute_2, ...});
+  %hr/
+  .page-header
+    %h2 Events
+  %table.table.table-striped
+    - @events.each do |event|
+      %tr
+        %td= event.name
+        %td
+          %pre= event.data.inspect
+        %td= event.created_at.to_s(:long)

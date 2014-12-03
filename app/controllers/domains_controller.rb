@@ -17,6 +17,7 @@ class DomainsController < ApplicationController
 
   def show
     @domain = current_user.domains.find(params[:id])
+    @events = @domain.events.desc(:created_at)
   end
 
   def edit

@@ -61,6 +61,7 @@ GEM
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (2.2.2)
+    google_visualr (2.4.0)
     haml (4.0.5)
       tilt
     haml-rails (0.5.3)
@@ -172,6 +173,7 @@ DEPENDENCIES
   bootswatch-rails
   coffee-rails (~> 4.0.0)
   devise
+  google_visualr
   haml-rails
   httparty
   jbuilder (~> 2.0)
