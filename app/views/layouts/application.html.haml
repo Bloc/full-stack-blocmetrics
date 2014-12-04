@@ -1,0 +1,17 @@
+!!!
+%html
+  %head
+    %title Blocmetrics
+    = stylesheet_link_tag    'application', media: 'all'
+    = stylesheet_link_tag '//maxcdn.bootstrapcdn.com/bootswatch/3.3.0/slate/bootstrap.min.css'
+    = javascript_include_tag 'application'
+    = javascript_include_tag "/blocmetrics.js"
+    = javascript_include_tag "https://www.google.com/jsapi"
+    = csrf_meta_tags
+    %meta{name: 'blocmetrics_verification', content: 'e3bc21be363e7772ea71bfa5bce215261656fc87'}
+  %body
+    .container
+      = render partial: "shared/navigation"
+      .col-md-12.well
+        = render partial: "shared/flashes"
+        = yield

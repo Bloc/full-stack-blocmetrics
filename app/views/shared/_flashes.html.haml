@@ -1,0 +1,6 @@
+- [:alert, :notice, :warning, :error, :info].each do |alert_type|
+  - if flash[alert_type]
+    .alert.alert-dismissable{class: flash_class(alert_type)}
+      %button.close{type: "button", data: {dismiss: "alert"}, "aria-hidden" => true }
+        &times;
+      = flash[alert_type]

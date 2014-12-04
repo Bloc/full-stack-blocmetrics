@@ -1,0 +1,25 @@
+.page-header
+  %h1 Dashboard
+
+- if @domains.empty?
+  .text-center
+    .lead
+      No Domains found,
+      = link_to "Add one now", new_dashboard_domain_url
+- else
+  %table.table.table-condensed
+    %thead
+      %tr
+        %th Name
+        %th URL
+        %th
+    %tbody
+      - @domains.each do |domain|
+        %tr
+          %td= link_to domain.name, dashboard_domain_url(domain)
+          %td= link_to domain.url, domain.url, target: "_blank"
+          %td
+            = link_to "Show", dashboard_domain_url(domain), class: "btn btn-success btn-sm"
+            = link_to "Edit", edit_dashboard_domain_url(domain), class: "btn btn-success btn-sm"
+  .text-right
+    = link_to "Add a Domain", new_dashboard_domain_url, class: "btn btn-success btn-lg"

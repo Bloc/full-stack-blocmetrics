@@ -1,0 +1,9 @@
+.page-header
+  %h1
+    Edit
+    = @domain.name
+
+= simple_form_for [:dashboard, @domain] do |f|
+  = render partial: "form", locals: {f: f}
+  .text-right
+    = f.submit "Update Domain", class: "btn btn-success btn-lg"
