@@ -37,6 +37,8 @@
   %hr/
   .page-header
     %h2 Events
+  #chart.col-md-12
+  = render_chart(@chart, 'chart')
   %table.table.table-striped
     - @events.each do |event|
       %tr

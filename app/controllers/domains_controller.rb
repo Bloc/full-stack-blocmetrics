@@ -18,6 +18,22 @@ class DomainsController < ApplicationController
   def show
     @domain = current_user.domains.find(params[:id])
     @events = @domain.events.desc(:created_at)
+
+    data_table = GoogleVisualr::DataTable.new
+
+    data_table.new_column('string', 'Date' )
+    data_table.new_column('number', 'Events')
+
+    rows = []
+
+    @events.group_by {|event| event.created_at.strftime("%d/%m/%Y") }.each_pair do |date, events|
+      rows << [date, events.count]
+    end
+
+    data_table.add_rows(rows)
+
+    option = { height: 280, title: 'Events by date' }
+    @chart = GoogleVisualr::Interactive::AreaChart.new(data_table, option)
   end
 
   def edit
